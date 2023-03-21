@@ -18,6 +18,11 @@ public class LibzClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        // TEST
+        // registerInventoryTab(new InventoryTab(InventoryScreen.class, Text.of("TEST"), new Identifier("libz:textures/gui/test.png"), new Identifier("test:test"), 0));
+        // registerInventoryTab(new InventoryTab(InventoryScreen.class, Text.of("TEST3"), new Identifier("libz:textures/gui/test.png"), new Identifier("test:test"), 7));
+        // registerInventoryTab(new InventoryTab(InventoryScreen.class, Text.of("TEST2"), new Identifier("libz:textures/gui/test.png"), new Identifier("test:test"), 3));
+        // registerInventoryTab(new InventoryTab(InventoryScreen.class, Text.of("TEST1"), new Identifier("libz:textures/gui/test.png"), new Identifier("test:test"), 1));
     }
 
 }
