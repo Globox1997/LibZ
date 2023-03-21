@@ -1,10 +1,13 @@
 package net.libz.api;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 @SuppressWarnings("rawtypes")
+@Environment(EnvType.CLIENT)
 public class InventoryTab {
 
     private final Class screenClass;
