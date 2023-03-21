@@ -3,10 +3,13 @@ package net.libz.registry;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.libz.LibzClient;
 import net.libz.api.InventoryTab;
 import net.libz.util.SortList;
 
+@Environment(EnvType.CLIENT)
 public class TabRegistry {
 
     public static void registerInventoryTab(InventoryTab tab) {
