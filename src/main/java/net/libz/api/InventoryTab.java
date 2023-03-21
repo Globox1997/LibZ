@@ -13,14 +13,12 @@ public class InventoryTab {
     private final Class screenClass;
     private final Text title;
     private final Identifier texture;
-    private final Identifier packetId;
     private final int preferedPos;
 
-    public InventoryTab(Class screenClass, Text title, Identifier texture, Identifier packetId, int preferedPos) {
+    public InventoryTab(Class screenClass, Text title, Identifier texture, int preferedPos) {
         this.screenClass = screenClass;
         this.title = title;
         this.texture = texture;
-        this.packetId = packetId;
         this.preferedPos = preferedPos;
     }
 
@@ -34,10 +32,6 @@ public class InventoryTab {
 
     public Identifier getTexture() {
         return this.texture;
-    }
-
-    public Identifier getPacketId() {
-        return this.packetId;
     }
 
     public int getPreferedPos() {
