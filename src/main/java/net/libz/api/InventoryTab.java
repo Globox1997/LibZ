@@ -10,20 +10,16 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class InventoryTab {
 
-    private final Class screenClass;
+    private final Class[] screenClasses;
     private final Text title;
     private final Identifier texture;
     private final int preferedPos;
 
-    public InventoryTab(Class screenClass, Text title, Identifier texture, int preferedPos) {
-        this.screenClass = screenClass;
+    public InventoryTab(Text title, Identifier texture, int preferedPos, Class... screenClasses) {
+        this.screenClasses = screenClasses;
         this.title = title;
         this.texture = texture;
         this.preferedPos = preferedPos;
-    }
-
-    public Class getScreen() {
-        return this.screenClass;
     }
 
     public Text getTitle() {
@@ -46,7 +42,12 @@ public class InventoryTab {
     }
 
     public boolean isSelectedScreen(Class screenClass) {
-        return this.screenClass.equals(screenClass);
+        for (int i = 0; i < screenClasses.length; i++) {
+            if (screenClasses[i].equals(screenClass)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

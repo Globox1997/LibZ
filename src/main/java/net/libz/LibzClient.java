@@ -6,6 +6,7 @@ import java.util.List;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.libz.api.InventoryTab;
 import net.minecraft.util.Identifier;
 
@@ -16,13 +17,10 @@ public class LibzClient implements ClientModInitializer {
 
     public static final Identifier inventoryTabTexture = new Identifier("libz:textures/gui/icons.png");
 
+    public static final boolean isLibGuiLoaded = FabricLoader.getInstance().isModLoaded("libgui");
+
     @Override
     public void onInitializeClient() {
-        // TEST
-        // registerInventoryTab(new InventoryTab(InventoryScreen.class, Text.of("TEST"), new Identifier("libz:textures/gui/test.png"), new Identifier("test:test"), 0));
-        // registerInventoryTab(new InventoryTab(InventoryScreen.class, Text.of("TEST3"), new Identifier("libz:textures/gui/test.png"), new Identifier("test:test"), 7));
-        // registerInventoryTab(new InventoryTab(InventoryScreen.class, Text.of("TEST2"), new Identifier("libz:textures/gui/test.png"), new Identifier("test:test"), 3));
-        // registerInventoryTab(new InventoryTab(InventoryScreen.class, Text.of("TEST1"), new Identifier("libz:textures/gui/test.png"), new Identifier("test:test"), 1));
     }
 
 }
