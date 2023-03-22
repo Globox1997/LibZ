@@ -39,7 +39,7 @@ public class DrawTabHelper {
                     }
 
                     RenderSystem.setShaderTexture(0, LibzClient.inventoryTabTexture);
-                    screenClass.drawTexture(matrices, xPos, isSelectedTab ? y - 23 : y - 21, textureX, 0, 24, isSelectedTab ? 27 : 21);
+                    screenClass.drawTexture(matrices, xPos, isSelectedTab ? y - 23 : y - 21, textureX, 0, 24, isSelectedTab ? 27 : isFirstTab ? 25 : 21);
 
                     RenderSystem.setShaderTexture(0, inventoryTab.getTexture());
                     DrawableHelper.drawTexture(matrices, xPos + 5, y - 16, 0, 0, 14, 14, 14, 14);
@@ -63,9 +63,8 @@ public class DrawTabHelper {
                 InventoryTab inventoryTab = LibzClient.inventoryTabs.get(i);
                 if (inventoryTab.shouldShow(client)) {
                     boolean isSelectedTab = inventoryTab.isSelectedScreen(screenClass.getClass());
-                    // !inventoryTab.isSelectedScreen(screenClass.getClass()) &&
-
-                    if (isPointWithinBounds(x, y, xPos - x + 1, isSelectedTab ? -24 : -20, 22, isSelectedTab ? 23 : 19, (double) mouseX, (double) mouseY)) {
+                    if (inventoryTab.canClick(screenClass.getClass(), client)
+                            && isPointWithinBounds(x, y, xPos - x + 1, isSelectedTab ? -24 : -20, 22, isSelectedTab ? 23 : 19, (double) mouseX, (double) mouseY)) {
                         inventoryTab.onClick(client);
                     }
                     xPos += 25;
