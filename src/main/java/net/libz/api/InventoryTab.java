@@ -40,6 +40,10 @@ public class InventoryTab {
     public void onClick(MinecraftClient client) {
     }
 
+    public boolean canClick(Class<?> screenClass, MinecraftClient client) {
+        return !isSelectedScreen(screenClass);
+    }
+
     public boolean isSelectedScreen(Class<?> screenClass) {
         for (int i = 0; i < screenClasses.length; i++) {
             if (screenClasses[i].equals(screenClass)) {
