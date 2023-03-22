@@ -6,16 +6,15 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-@SuppressWarnings("rawtypes")
 @Environment(EnvType.CLIENT)
 public class InventoryTab {
 
-    private final Class[] screenClasses;
+    private final Class<?>[] screenClasses;
     private final Text title;
     private final Identifier texture;
     private final int preferedPos;
 
-    public InventoryTab(Text title, Identifier texture, int preferedPos, Class... screenClasses) {
+    public InventoryTab(Text title, Identifier texture, int preferedPos, Class<?>... screenClasses) {
         this.screenClasses = screenClasses;
         this.title = title;
         this.texture = texture;
@@ -41,7 +40,7 @@ public class InventoryTab {
     public void onClick(MinecraftClient client) {
     }
 
-    public boolean isSelectedScreen(Class screenClass) {
+    public boolean isSelectedScreen(Class<?> screenClass) {
         for (int i = 0; i < screenClasses.length; i++) {
             if (screenClasses[i].equals(screenClass)) {
                 return true;
