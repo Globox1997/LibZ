@@ -26,7 +26,7 @@ public class TabRegistry {
         SortList.concurrentSort(priorityList, LibzClient.inventoryTabs);
     }
 
-    public static void registerBlockTab(BlockTab tab, Class<?> parentClass) {
+    public static void registerBlockTab(InventoryTab tab, Class<?> parentClass) {
         if (LibzClient.blockTabs.get(parentClass) != null) {
             LibzClient.blockTabs.get(parentClass).add(tab);
             // Sort prefered pos
@@ -40,7 +40,7 @@ public class TabRegistry {
             }
             SortList.concurrentSort(priorityList, LibzClient.blockTabs.get(parentClass));
         } else {
-            List<BlockTab> list = new ArrayList<BlockTab>();
+            List<InventoryTab> list = new ArrayList<InventoryTab>();
             list.add(tab);
             LibzClient.blockTabs.put(parentClass, list);
         }

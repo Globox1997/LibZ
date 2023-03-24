@@ -27,7 +27,7 @@ public class DrawTabHelper {
             Text shownTooltip = null;
             boolean isBlockTab = ((Tab) screenClass).isBlockTab();
 
-            List<?> list = null;
+            List<InventoryTab> list = null;
             if (isBlockTab) {
                 if (LibzClient.blockTabs.isEmpty() || ((Tab) screenClass).getParentScreenClass() == null || !LibzClient.blockTabs.containsKey(((Tab) screenClass).getParentScreenClass())) {
                     return;
@@ -36,34 +36,36 @@ public class DrawTabHelper {
             } else {
                 list = LibzClient.inventoryTabs;
             }
-            for (int i = 0; i < list.size(); i++) {
-                InventoryTab inventoryTab = (InventoryTab) list.get(i);
-                if (inventoryTab.shouldShow(client)) {
+            if (list != null) {
+                for (int i = 0; i < list.size(); i++) {
+                    InventoryTab inventoryTab = list.get(i);
+                    if (inventoryTab.shouldShow(client)) {
 
-                    boolean isFirstTab = i == 0;
-                    boolean isSelectedTab = inventoryTab.isSelectedScreen(screenClass.getClass());
+                        boolean isFirstTab = i == 0;
+                        boolean isSelectedTab = inventoryTab.isSelectedScreen(screenClass.getClass());
 
-                    int textureX = isFirstTab ? 24 : 72;
-                    if (isSelectedTab) {
-                        textureX -= 24;
-                    }
-                    if (LibzClient.isLibGuiLoaded && LibGui.isDarkMode()) {
-                        textureX += 96;
-                    }
+                        int textureX = isFirstTab ? 24 : 72;
+                        if (isSelectedTab) {
+                            textureX -= 24;
+                        }
+                        if (LibzClient.isLibGuiLoaded && LibGui.isDarkMode()) {
+                            textureX += 96;
+                        }
 
-                    RenderSystem.setShaderTexture(0, LibzClient.tabTexture);
-                    screenClass.drawTexture(matrices, xPos, isSelectedTab ? y - 23 : y - 21, textureX, 0, 24, isSelectedTab ? 27 : isFirstTab ? 25 : 21);
-                    if (inventoryTab.getTexture() != null) {
-                        RenderSystem.setShaderTexture(0, inventoryTab.getTexture());
-                        DrawableHelper.drawTexture(matrices, xPos + 5, y - 16, 0, 0, 14, 14, 14, 14);
-                    } else if (inventoryTab.getItemStack() != null) {
-                        client.getItemRenderer().renderInGui(inventoryTab.getItemStack(), xPos + 4, y - 17);
-                    }
+                        RenderSystem.setShaderTexture(0, LibzClient.tabTexture);
+                        screenClass.drawTexture(matrices, xPos, isSelectedTab ? y - 23 : y - 21, textureX, 0, 24, isSelectedTab ? 27 : isFirstTab ? 25 : 21);
+                        if (inventoryTab.getTexture() != null) {
+                            RenderSystem.setShaderTexture(0, inventoryTab.getTexture());
+                            DrawableHelper.drawTexture(matrices, xPos + 5, y - 16, 0, 0, 14, 14, 14, 14);
+                        } else if (inventoryTab.getItemStack() != null) {
+                            client.getItemRenderer().renderInGui(inventoryTab.getItemStack(), xPos + 4, y - 17);
+                        }
 
-                    if (!isSelectedTab && isPointWithinBounds(x, y, xPos - x + 1, -20, 22, 19, (double) mouseX, (double) mouseY)) {
-                        shownTooltip = inventoryTab.getTitle();
+                        if (!isSelectedTab && isPointWithinBounds(x, y, xPos - x + 1, -20, 22, 19, (double) mouseX, (double) mouseY)) {
+                            shownTooltip = inventoryTab.getTitle();
+                        }
+                        xPos += 25;
                     }
-                    xPos += 25;
                 }
             }
             if (shownTooltip != null) {
@@ -77,7 +79,7 @@ public class DrawTabHelper {
             int xPos = x;
             boolean isBlockTab = ((Tab) screenClass).isBlockTab();
 
-            List<?> list = null;
+            List<InventoryTab> list = null;
             if (isBlockTab) {
                 if (LibzClient.blockTabs.isEmpty() || ((Tab) screenClass).getParentScreenClass() == null || !LibzClient.blockTabs.containsKey(((Tab) screenClass).getParentScreenClass())) {
                     return;
@@ -86,15 +88,17 @@ public class DrawTabHelper {
             } else {
                 list = LibzClient.inventoryTabs;
             }
-            for (int i = 0; i < list.size(); i++) {
-                InventoryTab inventoryTab = (InventoryTab) list.get(i);
-                if (inventoryTab.shouldShow(client)) {
-                    boolean isSelectedTab = inventoryTab.isSelectedScreen(screenClass.getClass());
-                    if (inventoryTab.canClick(screenClass.getClass(), client)
-                            && isPointWithinBounds(x, y, xPos - x + 1, isSelectedTab ? -24 : -20, 22, isSelectedTab ? 23 : 19, (double) mouseX, (double) mouseY)) {
-                        inventoryTab.onClick(client);
+            if (list != null) {
+                for (int i = 0; i < list.size(); i++) {
+                    InventoryTab inventoryTab = list.get(i);
+                    if (inventoryTab.shouldShow(client)) {
+                        boolean isSelectedTab = inventoryTab.isSelectedScreen(screenClass.getClass());
+                        if (inventoryTab.canClick(screenClass.getClass(), client)
+                                && isPointWithinBounds(x, y, xPos - x + 1, isSelectedTab ? -24 : -20, 22, isSelectedTab ? 23 : 19, (double) mouseX, (double) mouseY)) {
+                            inventoryTab.onClick(client);
+                        }
+                        xPos += 25;
                     }
-                    xPos += 25;
                 }
             }
         }
