@@ -25,14 +25,13 @@ public class DrawTabHelper {
 
             int xPos = x;
             Text shownTooltip = null;
-            boolean isBlockTab = ((Tab) screenClass).isBlockTab();
 
             List<InventoryTab> list = null;
-            if (isBlockTab) {
-                if (LibzClient.blockTabs.isEmpty() || ((Tab) screenClass).getParentScreenClass() == null || !LibzClient.blockTabs.containsKey(((Tab) screenClass).getParentScreenClass())) {
+            if (((Tab) screenClass).getParentScreenClass() != null) {
+                if (LibzClient.otherTabs.isEmpty() || !LibzClient.otherTabs.containsKey(((Tab) screenClass).getParentScreenClass())) {
                     return;
                 }
-                list = LibzClient.blockTabs.get(((Tab) screenClass).getParentScreenClass());
+                list = LibzClient.otherTabs.get(((Tab) screenClass).getParentScreenClass());
             } else {
                 list = LibzClient.inventoryTabs;
             }
@@ -77,14 +76,13 @@ public class DrawTabHelper {
     public static void onTabButtonClick(MinecraftClient client, Screen screenClass, int x, int y, double mouseX, double mouseY, boolean focused) {
         if (client != null && ConfigInit.CONFIG.inventoryButton && !focused && screenClass instanceof Tab) {
             int xPos = x;
-            boolean isBlockTab = ((Tab) screenClass).isBlockTab();
 
             List<InventoryTab> list = null;
-            if (isBlockTab) {
-                if (LibzClient.blockTabs.isEmpty() || ((Tab) screenClass).getParentScreenClass() == null || !LibzClient.blockTabs.containsKey(((Tab) screenClass).getParentScreenClass())) {
+            if (((Tab) screenClass).getParentScreenClass() != null) {
+                if (LibzClient.otherTabs.isEmpty() || !LibzClient.otherTabs.containsKey(((Tab) screenClass).getParentScreenClass())) {
                     return;
                 }
-                list = LibzClient.blockTabs.get(((Tab) screenClass).getParentScreenClass());
+                list = LibzClient.otherTabs.get(((Tab) screenClass).getParentScreenClass());
             } else {
                 list = LibzClient.inventoryTabs;
             }

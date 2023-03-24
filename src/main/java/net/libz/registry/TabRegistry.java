@@ -26,23 +26,23 @@ public class TabRegistry {
         SortList.concurrentSort(priorityList, LibzClient.inventoryTabs);
     }
 
-    public static void registerBlockTab(InventoryTab tab, Class<?> parentClass) {
-        if (LibzClient.blockTabs.get(parentClass) != null) {
-            LibzClient.blockTabs.get(parentClass).add(tab);
+    public static void registerOtherTab(InventoryTab tab, Class<?> parentClass) {
+        if (LibzClient.otherTabs.get(parentClass) != null) {
+            LibzClient.otherTabs.get(parentClass).add(tab);
             // Sort prefered pos
             List<Integer> priorityList = new ArrayList<Integer>();
-            for (int i = 0; i < LibzClient.blockTabs.get(parentClass).size(); i++) {
-                int preferedPos = LibzClient.blockTabs.get(parentClass).get(i).getPreferedPos();
+            for (int i = 0; i < LibzClient.otherTabs.get(parentClass).size(); i++) {
+                int preferedPos = LibzClient.otherTabs.get(parentClass).get(i).getPreferedPos();
                 if (preferedPos == -1) {
                     preferedPos = 99;
                 }
                 priorityList.add(preferedPos);
             }
-            SortList.concurrentSort(priorityList, LibzClient.blockTabs.get(parentClass));
+            SortList.concurrentSort(priorityList, LibzClient.otherTabs.get(parentClass));
         } else {
             List<InventoryTab> list = new ArrayList<InventoryTab>();
             list.add(tab);
-            LibzClient.blockTabs.put(parentClass, list);
+            LibzClient.otherTabs.put(parentClass, list);
         }
     }
 }
