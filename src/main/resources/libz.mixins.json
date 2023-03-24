@@ -7,7 +7,8 @@
   "mixins": [],
   "client": [
     "client.InventoryScreenMixin",
-    "client.CottonClientScreenMixin"
+    "client.CottonClientScreenMixin",
+    "client.HandledScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

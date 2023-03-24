@@ -6,7 +6,7 @@ import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.libz.LibzClient;
-import net.libz.api.InventoryTab;
+import net.libz.api.*;
 import net.libz.util.SortList;
 
 @Environment(EnvType.CLIENT)
@@ -24,5 +24,25 @@ public class TabRegistry {
             priorityList.add(preferedPos);
         }
         SortList.concurrentSort(priorityList, LibzClient.inventoryTabs);
+    }
+
+    public static void registerBlockTab(BlockTab tab, Class<?> parentClass) {
+        if (LibzClient.blockTabs.get(parentClass) != null) {
+            LibzClient.blockTabs.get(parentClass).add(tab);
+            // Sort prefered pos
+            List<Integer> priorityList = new ArrayList<Integer>();
+            for (int i = 0; i < LibzClient.blockTabs.get(parentClass).size(); i++) {
+                int preferedPos = LibzClient.blockTabs.get(parentClass).get(i).getPreferedPos();
+                if (preferedPos == -1) {
+                    preferedPos = 99;
+                }
+                priorityList.add(preferedPos);
+            }
+            SortList.concurrentSort(priorityList, LibzClient.blockTabs.get(parentClass));
+        } else {
+            List<BlockTab> list = new ArrayList<BlockTab>();
+            list.add(tab);
+            LibzClient.blockTabs.put(parentClass, list);
+        }
     }
 }

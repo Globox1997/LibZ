@@ -1,5 +1,7 @@
 package net.libz.util;
 
+import java.util.List;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import io.github.cottonmc.cotton.gui.client.LibGui;
@@ -23,8 +25,19 @@ public class DrawTabHelper {
 
             int xPos = x;
             Text shownTooltip = null;
-            for (int i = 0; i < LibzClient.inventoryTabs.size(); i++) {
-                InventoryTab inventoryTab = LibzClient.inventoryTabs.get(i);
+            boolean isBlockTab = ((Tab) screenClass).isBlockTab();
+
+            List<?> list = null;
+            if (isBlockTab) {
+                if (LibzClient.blockTabs.isEmpty() || ((Tab) screenClass).getParentScreenClass() == null || !LibzClient.blockTabs.containsKey(((Tab) screenClass).getParentScreenClass())) {
+                    return;
+                }
+                list = LibzClient.blockTabs.get(((Tab) screenClass).getParentScreenClass());
+            } else {
+                list = LibzClient.inventoryTabs;
+            }
+            for (int i = 0; i < list.size(); i++) {
+                InventoryTab inventoryTab = (InventoryTab) list.get(i);
                 if (inventoryTab.shouldShow(client)) {
 
                     boolean isFirstTab = i == 0;
@@ -38,7 +51,7 @@ public class DrawTabHelper {
                         textureX += 96;
                     }
 
-                    RenderSystem.setShaderTexture(0, LibzClient.inventoryTabTexture);
+                    RenderSystem.setShaderTexture(0, LibzClient.tabTexture);
                     screenClass.drawTexture(matrices, xPos, isSelectedTab ? y - 23 : y - 21, textureX, 0, 24, isSelectedTab ? 27 : isFirstTab ? 25 : 21);
                     if (inventoryTab.getTexture() != null) {
                         RenderSystem.setShaderTexture(0, inventoryTab.getTexture());
@@ -62,8 +75,19 @@ public class DrawTabHelper {
     public static void onTabButtonClick(MinecraftClient client, Screen screenClass, int x, int y, double mouseX, double mouseY, boolean focused) {
         if (client != null && ConfigInit.CONFIG.inventoryButton && !focused && screenClass instanceof Tab) {
             int xPos = x;
-            for (int i = 0; i < LibzClient.inventoryTabs.size(); i++) {
-                InventoryTab inventoryTab = LibzClient.inventoryTabs.get(i);
+            boolean isBlockTab = ((Tab) screenClass).isBlockTab();
+
+            List<?> list = null;
+            if (isBlockTab) {
+                if (LibzClient.blockTabs.isEmpty() || ((Tab) screenClass).getParentScreenClass() == null || !LibzClient.blockTabs.containsKey(((Tab) screenClass).getParentScreenClass())) {
+                    return;
+                }
+                list = LibzClient.blockTabs.get(((Tab) screenClass).getParentScreenClass());
+            } else {
+                list = LibzClient.inventoryTabs;
+            }
+            for (int i = 0; i < list.size(); i++) {
+                InventoryTab inventoryTab = (InventoryTab) list.get(i);
                 if (inventoryTab.shouldShow(client)) {
                     boolean isSelectedTab = inventoryTab.isSelectedScreen(screenClass.getClass());
                     if (inventoryTab.canClick(screenClass.getClass(), client)
