@@ -1,8 +1,11 @@
 package net.libz.api;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -11,13 +14,17 @@ public class InventoryTab {
 
     private final Class<?>[] screenClasses;
     private final Text title;
+    @Nullable
     private final Identifier texture;
+    @Nullable
+    private final ItemStack itemStack;
     private final int preferedPos;
 
-    public InventoryTab(Text title, Identifier texture, int preferedPos, Class<?>... screenClasses) {
+    public InventoryTab(Text title, @Nullable Identifier texture, @Nullable ItemStack itemStack, int preferedPos, Class<?>... screenClasses) {
         this.screenClasses = screenClasses;
         this.title = title;
         this.texture = texture;
+        this.itemStack = itemStack;
         this.preferedPos = preferedPos;
     }
 
@@ -25,8 +32,14 @@ public class InventoryTab {
         return this.title;
     }
 
+    @Nullable
     public Identifier getTexture() {
         return this.texture;
+    }
+
+    @Nullable
+    public ItemStack getItemStack() {
+        return this.itemStack;
     }
 
     public int getPreferedPos() {
