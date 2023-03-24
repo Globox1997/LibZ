@@ -16,15 +16,12 @@ public class InventoryTab {
     private final Text title;
     @Nullable
     private final Identifier texture;
-    @Nullable
-    private final ItemStack itemStack;
     private final int preferedPos;
 
-    public InventoryTab(Text title, @Nullable Identifier texture, @Nullable ItemStack itemStack, int preferedPos, Class<?>... screenClasses) {
+    public InventoryTab(Text title, @Nullable Identifier texture, int preferedPos, Class<?>... screenClasses) {
         this.screenClasses = screenClasses;
         this.title = title;
         this.texture = texture;
-        this.itemStack = itemStack;
         this.preferedPos = preferedPos;
     }
 
@@ -38,8 +35,8 @@ public class InventoryTab {
     }
 
     @Nullable
-    public ItemStack getItemStack() {
-        return this.itemStack;
+    public ItemStack getItemStack(MinecraftClient client) {
+        return null;
     }
 
     public int getPreferedPos() {
