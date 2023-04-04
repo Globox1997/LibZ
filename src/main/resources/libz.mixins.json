@@ -8,7 +8,8 @@
   "client": [
     "client.InventoryScreenMixin",
     "client.CottonClientScreenMixin",
-    "client.HandledScreenMixin"
+    "client.HandledScreenMixin",
+    "client.IntegratedServerLoaderMixin"
   ],
   "injectors": {
     "defaultRequire": 1
