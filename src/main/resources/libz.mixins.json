@@ -7,7 +7,6 @@
   "mixins": [],
   "client": [
     "client.InventoryScreenMixin",
-    "client.CottonClientScreenMixin",
     "client.HandledScreenMixin",
     "client.IntegratedServerLoaderMixin"
   ],

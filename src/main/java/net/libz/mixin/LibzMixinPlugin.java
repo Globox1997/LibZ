@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 import net.fabricmc.loader.api.FabricLoader;
 
+@SuppressWarnings("unused")
 public class LibzMixinPlugin implements IMixinConfigPlugin {
 
     @Override
@@ -22,9 +23,6 @@ public class LibzMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (mixinClassName.contains("CottonClientScreenMixin") && !FabricLoader.getInstance().isModLoaded("libgui"))
-            return false;
-
         return true;
     }
 

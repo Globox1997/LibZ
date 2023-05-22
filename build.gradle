@@ -13,7 +13,6 @@ group = project.maven_group
 repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
-	maven { url "https://server.bbkr.space/artifactory/libs-release" }
 }
 
 dependencies {
@@ -33,8 +32,6 @@ dependencies {
     modCompileOnly modRuntimeOnly("com.terraformersmc:modmenu:${project.mod_menu_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-	// LibGui
-    modCompileOnly ("io.github.cottonmc:LibGui:${project.cottonmc_version}")
 }
 
 processResources {

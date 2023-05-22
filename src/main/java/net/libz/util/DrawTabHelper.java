@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import io.github.cottonmc.cotton.gui.client.LibGui;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.libz.LibzClient;
@@ -46,9 +45,6 @@ public class DrawTabHelper {
                         int textureX = isFirstTab ? 24 : 72;
                         if (isSelectedTab) {
                             textureX -= 24;
-                        }
-                        if (LibzClient.isLibGuiLoaded && LibGui.isDarkMode()) {
-                            textureX += 96;
                         }
 
                         RenderSystem.setShaderTexture(0, LibzClient.tabTexture);
