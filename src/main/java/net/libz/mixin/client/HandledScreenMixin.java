@@ -11,9 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.libz.util.DrawTabHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 
@@ -34,8 +34,8 @@ public abstract class HandledScreenMixin extends Screen {
     }
 
     @Inject(method = "render", at = @At("TAIL"))
-    private void renderMixin(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
-        DrawTabHelper.drawTab(client, matrices, this, x, y, mouseX, mouseY);
+    private void renderMixin(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo info) {
+        DrawTabHelper.drawTab(client, context, this, x, y, mouseX, mouseY);
     }
 
     @Inject(method = "mouseClicked", at = @At("HEAD"))
