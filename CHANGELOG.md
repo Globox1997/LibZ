@@ -1,6 +1,6 @@
 ### Added:
 - 
 ### Fixed:
-- 
+- Fixed tab render
 ### Changed:
-- Updated to mc 1.20
+- 

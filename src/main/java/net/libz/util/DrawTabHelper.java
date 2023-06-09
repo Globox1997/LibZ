@@ -2,8 +2,6 @@ package net.libz.util;
 
 import java.util.List;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.libz.LibzClient;
@@ -48,8 +46,7 @@ public class DrawTabHelper {
 
                         context.drawTexture(LibzClient.tabTexture, xPos, isSelectedTab ? y - 23 : y - 21, textureX, 0, 24, isSelectedTab ? 27 : isFirstTab ? 25 : 21);
                         if (inventoryTab.getTexture() != null) {
-                            RenderSystem.setShaderTexture(0, inventoryTab.getTexture());
-                            context.drawTexture(LibzClient.tabTexture, xPos + 5, y - 16, 0, 0, 14, 14, 14, 14);
+                            context.drawTexture(inventoryTab.getTexture(), xPos + 5, y - 16, 0, 0, 14, 14, 14, 14);
                         } else if (inventoryTab.getItemStack(client) != null) {
                             context.drawItem(inventoryTab.getItemStack(client), xPos + 4, y - 17);
                         }
