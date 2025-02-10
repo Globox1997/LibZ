@@ -1,0 +1,5 @@
+{
+  "text.autoconfig.libz.title": "Настройки LibZ",
+  "text.autoconfig.libz.option.inventoryButton": "Показывать кнопку в инвентаре",
+  "text.autoconfig.libz.option.syncConfig": "Синхронизировать конфигурацию"
+}
