@@ -2,15 +2,14 @@ package net.libz.network;
 
 import java.util.Iterator;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import blue.endless.jankson.Jankson;
+import blue.endless.jankson.JsonObject;
+import blue.endless.jankson.JsonElement;
+import blue.endless.jankson.api.SyntaxError;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.ConfigManager;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Jankson;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.api.SyntaxError;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -30,31 +29,26 @@ public class LibzClientPacket {
         ClientPlayNetworking.registerGlobalReceiver(ConfigPacket.PACKET_ID, (payload, context) -> {
             String configName = payload.configName();
             boolean gson = payload.gson();
-            ObjectMapper objectMapper = new ObjectMapper();
             byte[] jsonBytes = payload.bytes();
+
             context.client().execute(() -> {
-                JsonNode oldJsonNode = ConfigHelper.getConfigNode(configName, gson, false);
-                JsonNode jsonNode = ConfigHelper.readJsonTree(objectMapper, jsonBytes);
+                JsonObject oldJsonNode = ConfigHelper.getConfigNode(configName, gson, false);
+                JsonObject newJsonNode = ConfigHelper.readJsonTree(jsonBytes);
 
-                if (oldJsonNode.isObject() && jsonNode.isObject()) {
-                    ObjectNode existingObjectNode = (ObjectNode) oldJsonNode;
-                    ObjectNode newObjectNode = (ObjectNode) jsonNode;
-
-                    newObjectNode.fields().forEachRemaining(entry -> {
-                        String fieldName = entry.getKey();
-                        JsonNode newValue = entry.getValue();
-                        existingObjectNode.set(fieldName, newValue);
-                    });
+                if (oldJsonNode != null && newJsonNode != null) {
+                    for (String key : newJsonNode.keySet()) {
+                        JsonElement newValue = newJsonNode.get(key);
+                        oldJsonNode.put(key, newValue);
+                    }
 
                     Jankson jankson = Jankson.builder().build();
 
-                    // Could get improved here by just get holder not iterating over
-                    Iterator<ConfigHolder<?>> iterator = AutoConfigAccess.getHolders().values().iterator();
-                    while (iterator.hasNext()) {
-                        ConfigHolder<?> holder = iterator.next();
+                    for (ConfigHolder<?> holder : AutoConfigAccess.getHolders().values()) {
                         if (((ConfigManager<?>) holder).getDefinition().name().equals(configName)) {
                             try {
-                                ConfigData data = (ConfigData) jankson.fromJson(jankson.load(existingObjectNode.toString()), holder.getConfigClass());
+                                String mergedJson = oldJsonNode.toJson();
+                                ConfigData data = (ConfigData) jankson.fromJson(jankson.load(mergedJson), holder.getConfigClass());
+
                                 ((ConfigManager<ConfigData>) holder).setConfig(data);
 
                                 if (holder.getConfig() instanceof ConfigSync) {

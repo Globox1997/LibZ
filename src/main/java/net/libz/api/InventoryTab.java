@@ -1,5 +1,7 @@
 package net.libz.api;
 
+import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.sound.SoundEvents;
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.api.EnvType;
@@ -64,6 +66,7 @@ public class InventoryTab {
     }
 
     public void onClick(MinecraftClient client) {
+        client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
     }
 
     public boolean canClick(Class<?> screenClass, MinecraftClient client) {

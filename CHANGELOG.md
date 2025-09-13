@@ -1,6 +1,6 @@
 ### Added:
-- 
+- Added tab click sound
 ### Fixed:
 - 
 ### Changed:
-- Updated to mc 1.21.1
+- Changed json library

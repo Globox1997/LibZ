@@ -1,19 +1,21 @@
 package net.libz.util;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.jetbrains.annotations.Nullable;
+
+import blue.endless.jankson.Jankson;
+import blue.endless.jankson.JsonObject;
+import blue.endless.jankson.api.SyntaxError;
 
 import me.shedaniel.autoconfig.util.Utils;
 
 public class ConfigHelper {
+
+    private static final Jankson JANKSON = Jankson.builder().build();
 
     public static void copyConfig(String configName, boolean gson) {
         Path configPath = getConfigPath(configName, gson);
@@ -50,12 +52,12 @@ public class ConfigHelper {
     }
 
     @Nullable
-    public static JsonNode getConfigNode(String configName, boolean gson, boolean excludeClientOnly) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+    public static JsonObject getConfigNode(String configName, boolean gson, boolean excludeClientOnly) {
         try {
-            return objectMapper.readTree(readConfigFile(configName, gson, excludeClientOnly));
-        } catch (JsonProcessingException e) {
+            String json = readConfigFile(configName, gson, excludeClientOnly);
+            if (json == null) return null;
+            return JANKSON.load(json);
+        } catch (SyntaxError e) {
             e.printStackTrace();
         }
         return null;
@@ -63,20 +65,22 @@ public class ConfigHelper {
 
     @Nullable
     public static byte[] getConfigBytes(String configName, boolean gson, boolean excludeClientOnly) {
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.writeValueAsBytes(getConfigNode(configName, gson, excludeClientOnly));
-        } catch (JsonProcessingException e) {
+            JsonObject obj = getConfigNode(configName, gson, excludeClientOnly);
+            if (obj == null) return null;
+            return obj.toJson().getBytes(StandardCharsets.UTF_8);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
     @Nullable
-    public static JsonNode readJsonTree(ObjectMapper objectMapper, byte[] bytes) {
+    public static JsonObject readJsonTree(byte[] bytes) {
         try {
-            return objectMapper.readTree(bytes);
-        } catch (IOException e) {
+            String json = new String(bytes, StandardCharsets.UTF_8);
+            return JANKSON.load(json);
+        } catch (SyntaxError e) {
             e.printStackTrace();
         }
         return null;
