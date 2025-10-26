@@ -85,7 +85,7 @@ public class DrawTabHelper {
     }
 
     private static void drawTexture(DrawContext context,Identifier texture, int x, int y, int u, int v, int width, int height) {
-        context.drawTexture(RenderPipelines.GUI_TEXTURED, texture, x, y, u , v, width, height, width, height);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, texture, x, y, u , v, width, height, 256, 256);
     }
 
     /**

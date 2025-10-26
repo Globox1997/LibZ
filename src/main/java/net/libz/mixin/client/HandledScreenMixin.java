@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.libz.util.DrawTabHelper;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -39,7 +40,7 @@ public abstract class HandledScreenMixin extends Screen {
     }
 
     @Inject(method = "mouseClicked", at = @At("HEAD"))
-    private void mouseClickedMixin(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> info) {
-        DrawTabHelper.onTabButtonClick(client, this, this.x, this.y, mouseX, mouseY, this.focusedSlot != null);
+    private void mouseClickedMixin(Click click, boolean doubled, CallbackInfoReturnable<Boolean> info) {
+        DrawTabHelper.onTabButtonClick(client, this, this.x, this.y, click.x(), click.y(), this.focusedSlot != null);
     }
 }

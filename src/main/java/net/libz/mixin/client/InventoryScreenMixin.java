@@ -4,13 +4,11 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.ingame.RecipeBookScreen;
-import net.minecraft.client.gui.screen.ingame.StatusEffectsDisplay;
 import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
 
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

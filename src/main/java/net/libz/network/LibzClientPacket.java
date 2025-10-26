@@ -1,7 +1,5 @@
 package net.libz.network;
 
-import java.util.Iterator;
-
 import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.JsonElement;
