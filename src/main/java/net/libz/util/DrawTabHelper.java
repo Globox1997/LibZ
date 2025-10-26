@@ -9,9 +9,11 @@ import net.libz.api.InventoryTab;
 import net.libz.api.Tab;
 import net.libz.init.ConfigInit;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class DrawTabHelper {
@@ -58,9 +60,9 @@ public class DrawTabHelper {
                             textureX -= 24;
                         }
 
-                        context.drawTexture(LibzClient.tabTexture, xPos, isSelectedTab ? y - 23 : y - 21, textureX, 0, 24, isSelectedTab ? 27 : isFirstTab ? 25 : 21);
+                        drawTexture(context,LibzClient.tabTexture, xPos, isSelectedTab ? y - 23 : y - 21, textureX, 0, 24, isSelectedTab ? 27 : isFirstTab ? 25 : 21);
                         if (inventoryTab.getTexture() != null) {
-                            context.drawTexture(inventoryTab.getTexture(), xPos + 5, y - 16, 0, 0, 14, 14, 14, 14);
+                            drawTexture(context,inventoryTab.getTexture(), xPos + 5, y - 16, 0, 0, 14, 14, 14, 14);
                         } else if (inventoryTab.getItemStack(client) != null) {
                             context.drawItem(inventoryTab.getItemStack(client), xPos + 4, y - 17);
                         }
@@ -76,6 +78,14 @@ public class DrawTabHelper {
                 context.drawTooltip(client.textRenderer, shownTooltip, mouseX, mouseY);
             }
         }
+    }
+
+    private static void drawTexture(DrawContext context,Identifier texture,int x,int y,float u,float v,int width,int height,int textureWidth,int textureHeight) {
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, texture, x, y, u , v, width, height, textureWidth, textureHeight);
+    }
+
+    private static void drawTexture(DrawContext context,Identifier texture, int x, int y, int u, int v, int width, int height) {
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, texture, x, y, u , v, width, height, width, height);
     }
 
     /**

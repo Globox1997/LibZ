@@ -25,6 +25,6 @@ public class MouseMixin implements MouseAccessor {
     public void setMousePosition(int xPos, int yPos) {
         this.x = xPos;
         this.y = yPos;
-        InputUtil.setCursorParameters(this.client.getWindow().getHandle(), 212993, this.x, this.y);
+        InputUtil.setCursorParameters(this.client.getWindow(), 212993, this.x, this.y);
     }
 }
