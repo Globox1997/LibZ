@@ -3,11 +3,7 @@
   "minVersion": "0.8",
   "package": "net.libz.mixin",
   "compatibilityLevel": "JAVA_21",
-  "plugin": "net.libz.mixin.LibzMixinPlugin",
-  "mixins": [
-    "config.AutoConfigAccess",
-    "config.MarshallerImplMixin"
-  ],
+  "mixins": [],
   "client": [
     "client.InventoryScreenMixin",
     "client.HandledScreenMixin",

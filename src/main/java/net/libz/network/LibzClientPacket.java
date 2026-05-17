@@ -13,9 +13,9 @@ import me.shedaniel.autoconfig.ConfigManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.libz.AutoConfigHelper;
 import net.libz.access.MouseAccessor;
 import net.libz.api.ConfigSync;
-import net.libz.mixin.config.AutoConfigAccess;
 import net.libz.network.packet.ConfigPacket;
 import net.libz.network.packet.MousePacket;
 import net.libz.util.ConfigHelper;
@@ -43,7 +43,7 @@ public class LibzClientPacket {
 
                     Jankson jankson = Jankson.builder().build();
 
-                    for (ConfigHolder<?> holder : AutoConfigAccess.getHolders().values()) {
+                    for (ConfigHolder<?> holder : AutoConfigHelper.getHolders().values()) {
                         if (((ConfigManager<?>) holder).getDefinition().name().equals(configName)) {
                             try {
                                 String mergedJson = oldJsonNode.toJson();
